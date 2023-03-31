@@ -1,21 +1,13 @@
-import Home from './paginas/home/Home';
+import React from 'react';
 import './App.css';
-import React, { useState } from 'react';
 
 function App() {
-  const [valor, setValor] = useState(0);
-
-  function handleClick() {
-    setValor(valor + 1);
-  }
   return (
-    //  <Home  title="Componente Home"
-    //         description="Este é um componente Home que recebe props."/>
-    <div>
-      <p>O valor é: {valor}</p>
-      <button onClick={handleClick}>Adicionar 1</button>
-    </div>
-  );
+    <>
+    <h1 className="text-3xl font-bold text-red-500 underline text-center">
+      Hello world!
+    </h1>
+    </>
+);
 }
-
 export default App;
