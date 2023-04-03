@@ -1,96 +1,30 @@
 import React from 'react';
 import './Home.css';
 
-
-
 function Home() {
     return (
         <>
+            <div className="h-96 mb-96">
 
-            <div>
-                <div className='grid grid-cols-12 gap-2 m-4'>
+                <div className="bg-indigo-900 flex justify-center">
+                    <div className='container grid grid-cols-2 text-white'>
+                        <div className="flex flex-col gap-4 items-center justify-center py-4">
+                            <h2 className='text-5xl font-bold'>Seja bem vinde!</h2>
+                            <p className='text-xl'>Expresse aqui seus pensamentos e opniões</p>
 
-                    <div className='col-span-6 bg-green-300'>
-                        container 1
+                            <div className="flex justify-around gap-4">
+
+                                <button className='rounded bg-white text-blue-800 py-2 px-4'>Ver postagens</button>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-center ">
+                            <img src="https://i.imgur.com/fyfri1v.png" alt="" className='w-2/3' />
+                        </div>
                     </div>
-
-                    <div className='col-span-6 bg-yellow-200'>
-                        container 2
-                    </div>
-
-                </div>
-                <div className='grid grid-cols-12 gap-2 m-4'>
-
-                    <div className='col-span-8 bg-green-300'>
-                        container 1
-                    </div>
-
-                    <div className='col-span-4 bg-yellow-200'>
-                        container 2
-                    </div>
-
-                </div>
-
-                <div className='grid grid-cols-12 gap-2 m-4'>
-
-                    <div className='col-span-4 bg-green-300'>
-                        container 1
-                    </div>
-
-                    <div className='col-span-4 bg-yellow-200'>
-                        container 2
-                    </div>
-
-                    <div className='col-span-4 bg-red-500'>
-                        container 3
-                    </div>
-
-                </div>
-
-                <div className='grid grid-cols-12 gap-2 m-4'>
-
-                    <div className='col-span-3 bg-green-300'>
-                        container 1
-                    </div>
-
-                    <div className='col-span-3 bg-yellow-200'>
-                        container 2
-                    </div>
-
-                    <div className='col-span-3 bg-red-500'>
-                        container 3
-                    </div>
-
-                    <div className='col-span-3 bg-blue-500'>
-                        container 4
-                    </div>
-
-                </div>
-
-                <div className='grid grid-cols-12 gap-2 m-4'>
-
-                    <div className='col-span-4 bg-green-300'>
-                        container 1
-                    </div>
-
-                    <div className='col-span-4 bg-yellow-200'>
-                        container 2
-                    </div>
-
-                    <div className='col-span-2 bg-red-500'>
-                        container 3
-                    </div>
-
-                    <div className='col-span-2 bg-blue-500'>
-                        container 4
-                    </div>
-
                 </div>
 
             </div>
-
-
-
         </>
     );
 }
