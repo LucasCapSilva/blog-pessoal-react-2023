@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Dna } from 'react-loader-spinner';
-import { useNavigate } from 'react-router-dom';
 import CardPostagem from '../cardPostagem/CardPostagem';
 
 
