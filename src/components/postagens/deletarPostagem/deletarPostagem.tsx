@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../../contexts/AuthContext'
 import Postagem from '../../../models/Postagem'
 import { buscar, deletar } from '../../../services/Service'
+import { toastAlerta } from '../../../utils/toastAlerta'
 
 function DeletarPostagem() {
   const [postagem, setPostagem] = useState<Postagem>({} as Postagem)
@@ -24,7 +25,7 @@ function DeletarPostagem() {
 
     useEffect(() => {
         if (token === '') {
-            alert('Você precisa estar logado')
+          toastAlerta('Você precisa estar logado', 'info')
             navigate('/login')
         }
     }, [token])
@@ -47,10 +48,10 @@ function DeletarPostagem() {
                 }
             })
 
-            alert('Postagem apagada com sucesso')
+            toastAlerta('Postagem apagada com sucesso', 'sucesso')
 
         } catch (error) {
-            alert('Erro ao apagar a Postagem')
+          toastAlerta('Erro ao apagar a Postagem', 'erro')
         }
 
         retornar()
