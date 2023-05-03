@@ -1,19 +1,35 @@
-import Home from './paginas/home/Home';
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Home from './paginas/home/Home';
+
+interface User {
+  id: number;
+  name: string;
+}
 
 function App() {
-  const [valor, setValor] = useState(0);
 
-  function handleClick() {
-    setValor(valor + 1);
-  }
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    axios.get<User[]>('https://jsonplaceholder.typicode.com/users')
+      .then(response => {
+        setUsers(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
   return (
-    //  <Home  title="Componente Home"
-    //         description="Este é um componente Home que recebe props."/>
     <div>
-      <p>O valor é: {valor}</p>
-      <button onClick={handleClick}>Adicionar 1</button>
+      <h1>Lista de usuários</h1>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
     </div>
   );
 }
