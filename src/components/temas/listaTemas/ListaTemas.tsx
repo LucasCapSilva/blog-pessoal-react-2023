@@ -15,9 +15,16 @@ function ListaTemas() {
   const token = usuario.token;
 
   async function buscarTemas() {
-    await buscar('/temas', setTemas, {
-      headers: { Authorization: token },
-    });
+    try {
+      await buscar('/temas', setTemas, {
+        headers: { Authorization: token },
+      });
+    } catch (error: any) {
+      if(error.toString().includes('403')) {
+        alert('O token expirou, favor logar novamente')
+        handleLogout()
+      }
+    }
   }
 
   useEffect(() => {
