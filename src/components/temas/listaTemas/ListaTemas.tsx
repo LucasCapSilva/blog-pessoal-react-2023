@@ -11,7 +11,7 @@ function ListaTemas() {
 
   let navigate = useNavigate();
 
-  const { usuario } = useContext(AuthContext);
+  const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
   async function buscarTemas() {
@@ -20,7 +20,7 @@ function ListaTemas() {
         headers: { Authorization: token },
       });
     } catch (error: any) {
-      if(error.toString().includes('403')) {
+      if (error.toString().includes('403')) {
         alert('O token expirou, favor logar novamente')
         handleLogout()
       }
