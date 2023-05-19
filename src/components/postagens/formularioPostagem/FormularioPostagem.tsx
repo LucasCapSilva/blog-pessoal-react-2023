@@ -11,7 +11,7 @@ function FormularioPostagem() {
 
   const { id } = useParams<{ id: string }>();
 
-  const { usuario } = useContext(AuthContext);
+  const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
   const [temas, setTemas] = useState<Tema[]>([]);
@@ -66,7 +66,7 @@ function FormularioPostagem() {
     if (id !== undefined) {
       buscarPostagemPorId(id);
       console.log(tema);
-      
+
     }
   }, [id]);
 
@@ -93,7 +93,7 @@ function FormularioPostagem() {
   async function gerarNovaPostagem(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    console.log({postagem});
+    console.log({ postagem });
 
     if (id != undefined) {
       try {
@@ -102,11 +102,15 @@ function FormularioPostagem() {
             Authorization: token,
           },
         });
-
         alert('Postagem atualizada com sucesso');
         retornar();
-      } catch (error) {
-        alert('Erro ao atualizar a Postagem');
+      } catch (error: any) {
+        if (error.toString().includes('403')) {
+          alert('O token expirou, favor logar novamente')
+          handleLogout()
+        } else {
+          alert('Erro ao atualizar a Postagem');
+        }
       }
     } else {
       try {
@@ -118,13 +122,19 @@ function FormularioPostagem() {
 
         alert('Postagem cadastrada com sucesso');
         retornar();
-      } catch (error) {
-        alert('Erro ao cadastrar a Postagem');
+      } catch (error: any) {
+        if (error.toString().includes('403')) {
+          alert('O token expirou, favor logar novamente')
+          handleLogout()
+        } else {
+          alert('Erro ao cadastrar a Postagem');
+        }
       }
     }
   }
 
   const carregandoTema = tema.descricao === '';
+
   return (
     <div className="container flex flex-col mx-auto items-center">
       <h1 className="text-4xl text-center my-8">{id !== undefined ? 'Editar Postagem' : 'Cadastrar Postagem'}</h1>
