@@ -11,7 +11,7 @@ function FormularioTema() {
 
   const { id } = useParams<{ id: string }>();
 
-  const { usuario } = useContext(AuthContext);
+  const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
   async function buscarPorId(id: string) {
@@ -24,58 +24,69 @@ function FormularioTema() {
 
   useEffect(() => {
     if (id !== undefined) {
-        buscarPorId(id)
+      buscarPorId(id)
     }
-}, [id])
+  }, [id])
 
-function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
-  setTema({
+  function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+    setTema({
       ...tema,
       [e.target.name]: e.target.value
-  })
+    })
 
-  console.log(JSON.stringify(tema))
-}
-
-async function gerarNovoTema(e: ChangeEvent<HTMLFormElement>) {
-  e.preventDefault()
-
-  if (id !== undefined) {
-      try {
-          await atualizar(`/temas`, tema, setTema, {
-              headers: {
-                  'Authorization': token
-              }
-          })
-
-          alert('Tema atualizado com sucesso')
-          retornar()
-
-      } catch (error) {
-          alert('Erro ao atualizar o Tema')
-      }
-
-  } else {
-      try {
-          await cadastrar(`/temas`, tema, setTema, {
-              headers: {
-                  'Authorization': token
-              }
-          })
-
-          alert('Tema cadastrado com sucesso')
-
-      } catch (error) {
-          alert('Erro ao cadastrado o Tema')
-      }
+    console.log(JSON.stringify(tema))
   }
 
-  retornar()
-}
+  async function gerarNovoTema(e: ChangeEvent<HTMLFormElement>) {
+    e.preventDefault()
 
-function retornar() {
-  navigate("/temas")
-}
+    if (id !== undefined) {
+      try {
+        await atualizar(`/temas`, tema, setTema, {
+          headers: {
+            'Authorization': token
+          }
+        })
+
+        alert('Tema atualizado com sucesso')
+        retornar()
+
+      } catch (error: any) {
+        if (error.toString().includes('403')) {
+          alert('O token expirou, favor logar novamente')
+          handleLogout()
+        } else {
+          alert('Erro ao atualizar o Tema')
+        }
+
+      }
+
+    } else {
+      try {
+        await cadastrar(`/temas`, tema, setTema, {
+          headers: {
+            'Authorization': token
+          }
+        })
+
+        alert('Tema cadastrado com sucesso')
+
+      } catch (error: any) {
+        if (error.toString().includes('403')) {
+          alert('O token expirou, favor logar novamente')
+          handleLogout()
+        } else {
+          alert('Erro ao cadastrado o Tema')
+        }
+      }
+    }
+
+    retornar()
+  }
+
+  function retornar() {
+    navigate("/temas")
+  }
 
   useEffect(() => {
     if (token === '') {
