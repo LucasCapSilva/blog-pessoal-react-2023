@@ -12,13 +12,20 @@ function ListaTemas() {
 
   let navigate = useNavigate();
 
-  const { usuario } = useContext(AuthContext);
+  const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
   async function buscarTemas() {
-    await buscar('/temas', setTemas, {
-      headers: { Authorization: token },
-    });
+    try {
+      await buscar('/temas', setTemas, {
+        headers: { Authorization: token },
+      });
+    } catch (error: any) {
+      if(error.toString().includes('403')) {
+        toastAlerta('O token expirou, favor logar novamente', 'info')
+        handleLogout()
+      }
+    }
   }
 
   useEffect(() => {

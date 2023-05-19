@@ -12,7 +12,7 @@ function FormularioPostagem() {
 
   const { id } = useParams<{ id: string }>();
 
-  const { usuario } = useContext(AuthContext);
+  const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
   const [temas, setTemas] = useState<Tema[]>([]);
@@ -67,7 +67,7 @@ function FormularioPostagem() {
     if (id !== undefined) {
       buscarPostagemPorId(id);
       console.log(tema);
-      
+
     }
   }, [id]);
 
@@ -94,7 +94,7 @@ function FormularioPostagem() {
   async function gerarNovaPostagem(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    console.log({postagem});
+    console.log({ postagem });
 
     if (id != undefined) {
       try {
@@ -103,11 +103,15 @@ function FormularioPostagem() {
             Authorization: token,
           },
         });
-
         toastAlerta('Postagem atualizada com sucesso', 'sucesso');
         retornar();
-      } catch (error) {
-        toastAlerta('Erro ao atualizar a Postagem', 'erro');
+      } catch (error: any) {
+        if (error.toString().includes('403')) {
+          toastAlerta('O token expirou, favor logar novamente', 'info')
+          handleLogout()
+        } else {
+          toastAlerta('Erro ao atualizar a Postagem', 'erro');
+        }
       }
     } else {
       try {
@@ -119,13 +123,19 @@ function FormularioPostagem() {
 
         toastAlerta('Postagem cadastrada com sucesso', 'sucesso');
         retornar();
-      } catch (error) {
-        toastAlerta('Erro ao cadastrar a Postagem', 'erro');
+      } catch (error: any) {
+        if (error.toString().includes('403')) {
+          toastAlerta('O token expirou, favor logar novamente', 'info')
+          handleLogout()
+        } else {
+          toastAlerta('Erro ao cadastrar a Postagem', 'erro');
+        }
       }
     }
   }
 
   const carregandoTema = tema.descricao === '';
+
   return (
     <div className="container flex flex-col mx-auto items-center">
       <h1 className="text-4xl text-center my-8">{id !== undefined ? 'Editar Postagem' : 'Cadastrar Postagem'}</h1>

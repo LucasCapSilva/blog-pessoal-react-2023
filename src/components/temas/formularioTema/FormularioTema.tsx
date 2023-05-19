@@ -12,7 +12,7 @@ function FormularioTema() {
 
   const { id } = useParams<{ id: string }>();
 
-  const { usuario } = useContext(AuthContext);
+  const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
   async function buscarPorId(id: string) {
@@ -52,8 +52,14 @@ function FormularioTema() {
         toastAlerta('Tema atualizado com sucesso', 'sucesso')
         retornar()
 
-      } catch (error) {
-        toastAlerta('Tema atualizado com sucesso', 'sucesso')
+      } catch (error: any) {
+        if (error.toString().includes('403')) {
+          toastAlerta('O token expirou, favor logar novamente', 'info')
+          handleLogout()
+        } else {
+          toastAlerta('Erro ao atualizar o Tema', 'erro')
+        }
+
       }
 
     } else {
@@ -66,8 +72,13 @@ function FormularioTema() {
 
         toastAlerta('Tema cadastrado com sucesso', 'sucesso')
 
-      } catch (error) {
-        toastAlerta('Erro ao cadastrado o Tema', 'erro')
+      } catch (error: any) {
+        if (error.toString().includes('403')) {
+          toastAlerta('O token expirou, favor logar novamente', 'info')
+          handleLogout()
+        } else {
+          toastAlerta('Erro ao cadastrado o Tema', 'erro')
+        }
       }
     }
 
