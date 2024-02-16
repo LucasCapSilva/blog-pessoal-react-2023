@@ -43,10 +43,10 @@ function Home() {
                     <div className='basis-1/4 bg-red-500'>justify-center items-start alinhamento horizontal centro/vertical topo</div>
                 </div>
                 <div className='w-auto h-60 bg-gray-400 flex  justify-center items-center m-3'>
-                    <div className='basis-1/4 bg-red-500'>justify-center items-start alinhamento horizontal centro/vertical centro</div>
+                    <div className='basis-1/4 bg-red-500'>justify-center items-center alinhamento horizontal centro/vertical centro</div>
                 </div>
                 <div className='w-auto h-60 bg-gray-400 flex  justify-center items-end m-3'>
-                    <div className='basis-1/4 bg-red-500'>justify-center items-start alinhamento horizontal centro/vertical base</div>
+                    <div className='basis-1/4 bg-red-500'>justify-center items-end alinhamento horizontal centro/vertical base</div>
                 </div>
             </div>
 
